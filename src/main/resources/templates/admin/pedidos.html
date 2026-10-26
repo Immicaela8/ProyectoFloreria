@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Pedidos')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navAdmin('pedidos')}"></nav>
+
+<main class="container-fluid my-4 px-4">
+    <h2 class="fw-bold mb-4">Pedidos</h2>
+    <div th:replace="~{fragments/layout :: mensajes}"></div>
+
+    <div class="table-responsive">
+    <table class="table table-striped align-middle">
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th><th>Cliente</th><th>Producto</th><th>Cant.</th><th>Zona</th><th>Repartidor</th>
+            <th>Subtotal</th><th>Descuento</th><th>Envío</th><th>Total</th><th>Beneficios aplicados</th><th>Estado</th><th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="p : ${pedidos}">
+            <td th:text="${p.id}">1</td>
+            <td th:text="${p.cliente.nombre}">Cliente</td>
+            <td th:text="${p.producto.nombre}">Producto</td>
+            <td th:text="${p.cantidad}">1</td>
+            <td th:text="${p.zona.nombre}">Zona</td>
+            <td th:text="${p.repartidor != null ? p.repartidor.nombre : 'Sin asignar'}">Repartidor</td>
+            <td th:text="${@datos.soles(p.subtotal)}">S/ 0.00</td>
+            <td th:text="${@datos.soles(p.descuento)}">S/ 0.00</td>
+            <td th:text="${@datos.soles(p.envio)}">S/ 0.00</td>
+            <td class="fw-bold" th:text="${@datos.soles(p.total)}">S/ 0.00</td>
+            <td class="small" th:text="${p.beneficios}">-</td>
+            <td>
+                <span class="badge"
+                      th:classappend="${p.estado == 'Pendiente'} ? 'bg-warning text-dark' : (${p.estado == 'En camino'} ? 'bg-info text-dark' : (${p.estado == 'Entregado'} ? 'bg-success' : 'bg-secondary'))"
+                      th:text="${p.estado}">Estado</span>
+            </td>
+            <td class="text-nowrap">
+                <form th:action="@{/admin/pedidos/avanzar/{id}(id=${p.id})}" method="post" class="d-inline"
+                      th:if="${p.estado == 'Pendiente' or p.estado == 'En camino'}">
+                    <button type="submit" class="btn btn-sm btn-primary" title="Avanzar estado"><i class="bi bi-arrow-right-circle"></i></button>
+                </form>
+                <form th:action="@{/admin/pedidos/cancelar/{id}(id=${p.id})}" method="post" class="d-inline"
+                      th:if="${p.estado == 'Pendiente'}">
+                    <button type="submit" class="btn btn-sm btn-warning" title="Cancelar" onclick="return confirm('¿Cancelar pedido?')"><i class="bi bi-x-circle"></i></button>
+                </form>
+                <form th:action="@{/admin/pedidos/eliminar/{id}(id=${p.id})}" method="post" class="d-inline"
+                      th:if="${p.estado == 'Cancelado'}">
+                    <button type="submit" class="btn btn-sm btn-danger" title="Eliminar" onclick="return confirm('¿Eliminar pedido?')"><i class="bi bi-trash"></i></button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+    <p class="text-center text-muted" th:if="${pedidos.isEmpty()}">Aún no hay pedidos.</p>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<script th:replace="~{fragments/layout :: scripts}"></script>
+</body>
+</html>

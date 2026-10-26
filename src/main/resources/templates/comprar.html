@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Haz tu pedido')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navComprador('comprar')}"></nav>
+
+<div class="container text-center my-5">
+    <h1 class="fw-bold">Haz tu pedido 🌸</h1>
+    <p class="lead">Completa el formulario y recibe tus flores en casa.</p>
+</div>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div th:replace="~{fragments/layout :: mensajes}"></div>
+            <div class="alert alert-info">
+                <strong>Beneficios para ti</strong>
+                <ul class="mb-0">
+                    <li>Primera compra: delivery gratis.</li>
+                    <li>Más de 5 compras: 10% de descuento (cliente frecuente).</li>
+                    <li>El día de tu cumpleaños: 15% de descuento.</li>
+                    <li>10 o más unidades: 12% de descuento. Los descuentos por cliente u ocasión no se acumulan, se aplica el mayor.</li>
+                    <li>Máximo 3 pedidos pendientes por cliente.</li>
+                </ul>
+            </div>
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form th:action="@{/comprar}" method="post">
+                        <h4 class="mb-3">Datos del cliente</h4>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Nombre completo</label>
+                                <input type="text" class="form-control" name="nombre" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Correo electrónico</label>
+                                <input type="email" class="form-control" name="correo" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Teléfono</label>
+                                <input type="tel" class="form-control" name="telefono" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Dirección de entrega</label>
+                                <input type="text" class="form-control" name="direccion" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Fecha de nacimiento (opcional)</label>
+                                <input type="date" class="form-control" name="fechaNacimiento">
+                                <div class="form-text">Si hoy es tu cumpleaños tienes un descuento.</div>
+                            </div>
+                        </div>
+
+                        <h4 class="mt-4 mb-3">Detalles del pedido</h4>
+                        <div class="row g-3">
+                            <div class="col-md-8">
+                                <label class="form-label">Producto</label>
+                                <select class="form-select" name="productoId" required>
+                                    <option value="">Selecciona...</option>
+                                    <option th:each="p : ${productos}" th:value="${p.id}"
+                                            th:selected="${p.id == seleccionado}"
+                                            th:text="${p.nombre} + ' - ' + ${@datos.soles(@datos.precioFinal(p))} + ' (stock: ' + ${p.stock} + ')'">Producto</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Cantidad</label>
+                                <input type="number" class="form-control" name="cantidad" min="1" value="1" required>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label">Zona de entrega</label>
+                                <select class="form-select" name="zonaId" required>
+                                    <option value="">Selecciona...</option>
+                                    <option th:each="z : ${zonas}" th:value="${z.id}"
+                                            th:text="${z.nombre} + ' - delivery ' + ${@datos.soles(z.costo)}">Zona</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label">Mensaje en tarjeta (opcional)</label>
+                                <textarea class="form-control" name="mensaje" rows="3"></textarea>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-success w-100 mt-4">
+                            <i class="bi bi-check-circle"></i> Confirmar Pedido
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<script th:replace="~{fragments/layout :: scripts}"></script>
+</body>
+</html>

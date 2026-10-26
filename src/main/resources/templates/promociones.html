@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Promociones')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navComprador('promociones')}"></nav>
+
+<img th:src="@{/img/bannerPublicidad.png}" class="img-fluid w-100 d-block" alt="Promoción principal" style="height: 400px; object-fit: cover;">
+
+<div class="container my-5">
+    <h1 class="text-center fw-bold mb-4">Promociones Especiales 🌸</h1>
+    <div class="row g-4">
+        <div class="col-md-4" th:each="pr : ${promos}" th:with="prod=${pr.producto}">
+            <div class="card shadow-sm h-100">
+                <div class="ratio ratio-1x1">
+                    <img th:src="@{'/img/' + ${prod.imagen}}" class="w-100 d-block" th:alt="${prod.nombre}">
+                </div>
+                <div class="card-body text-center">
+                    <h5 class="card-title" th:text="${prod.nombre} + ' (-' + ${pr.porcentaje} + '%)'">Promo</h5>
+                    <p>
+                        <span class="text-muted text-decoration-line-through" th:text="${@datos.soles(prod.precio)}"></span>
+                        <span class="fw-bold text-danger" th:text="${@datos.soles(@datos.precioFinal(prod))}"></span>
+                    </p>
+                    <a th:href="@{/comprar(producto=${prod.id})}" class="btn btn-success"><i class="bi bi-cart"></i> Comprar ahora</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p class="text-center text-muted mt-4" th:if="${promos.isEmpty()}">No hay promociones activas por ahora.</p>
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<script th:replace="~{fragments/layout :: scripts}"></script>
+</body>
+</html>

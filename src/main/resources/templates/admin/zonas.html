@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Zonas')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navAdmin('zonas')}"></nav>
+
+<main class="container my-4">
+    <h2 class="fw-bold mb-4">Zonas de delivery</h2>
+    <div th:replace="~{fragments/layout :: mensajes}"></div>
+
+    <button type="button" class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#modalForm"><i class="bi bi-plus-circle"></i> Nuevo</button>
+
+    <div class="modal fade" id="modalForm" tabindex="-1" th:attr="data-volver=@{/admin/zonas}">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form th:action="@{/admin/zonas/guardar}" th:object="${zona}" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" th:text="${zona.id == 0} ? 'Nuevo zona' : 'Editar zona'">Editar</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" th:field="*{id}">
+                <div class="row g-3">
+                    <div class="col-12">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" class="form-control" th:field="*{nombre}" required>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Costo de delivery (S/)</label>
+                        <input type="number" step="0.01" class="form-control" th:field="*{costo}" required>
+                    </div>
+                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success"><i class="bi bi-save"></i> Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-striped align-middle">
+        <thead class="table-dark">
+        <tr><th>ID</th><th>Zona</th><th>Costo</th><th>Acciones</th></tr>
+        </thead>
+        <tbody>
+        <tr th:each="z : ${zonas}">
+            <td th:text="${z.id}">1</td>
+            <td th:text="${z.nombre}">Zona</td>
+            <td th:text="${@datos.soles(z.costo)}">S/ 0.00</td>
+            <td>
+                <a th:href="@{/admin/zonas(editar=${z.id})}" class="btn btn-sm btn-primary"><i class="bi bi-pencil"></i></a>
+                <form th:action="@{/admin/zonas/eliminar/{id}(id=${z.id})}" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Eliminar zona?')"><i class="bi bi-trash"></i></button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<script th:replace="~{fragments/layout :: scripts}"></script>
+<script th:if="${zona.id != 0}">
+    var modal = document.getElementById('modalForm');
+    new bootstrap.Modal(modal).show();
+    modal.addEventListener('hidden.bs.modal', function () { window.location = modal.dataset.volver; });
+</script>
+</body>
+</html>

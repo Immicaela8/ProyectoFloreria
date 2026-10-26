@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Login')}"></head>
+<body class="bg-light">
+<div class="container-fluid">
+    <div class="row vh-100">
+        <div class="col-md-4 d-flex justify-content-center align-items-center bg-white">
+            <div class="card shadow p-4 w-100">
+                <h3 class="text-center mb-4">Acceso Florería</h3>
+                <div th:replace="~{fragments/layout :: mensajes}"></div>
+                <form th:action="@{/login}" method="post">
+                    <div class="mb-3">
+                        <label for="correo" class="form-label">Correo</label>
+                        <input type="email" class="form-control" id="correo" name="correo" placeholder="ejemplo@correo.com" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="********" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Ingresar</button>
+                </form>
+                <p class="text-center mt-3 mb-0">
+                    ¿No tienes cuenta?
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalRegistro">Registrarse</a>
+                </p>
+                <p class="text-muted small mt-3 mb-0">
+                    Administrador: admin@floreria.com<br>
+                    Comprador: cualquier otro correo. La contraseña es libre.
+                </p>
+            </div>
+        </div>
+        <div class="col-md-8 p-0">
+            <img th:src="@{/img/floreriaindex.jpg}" class="img-fluid vh-100 w-100" style="object-fit: cover;" alt="Florería">
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalRegistro" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form th:action="@{/registro}" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title">Registrarse</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" class="form-control" name="nombre" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Correo</label>
+                        <input type="email" class="form-control" name="correo" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Teléfono</label>
+                        <input type="text" class="form-control" name="telefono" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Dirección</label>
+                        <input type="text" class="form-control" name="direccion" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Fecha de nacimiento</label>
+                        <input type="date" class="form-control" name="fechaNacimiento">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Crear cuenta</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script th:replace="~{fragments/layout :: scripts}"></script>
+</body>
+</html>

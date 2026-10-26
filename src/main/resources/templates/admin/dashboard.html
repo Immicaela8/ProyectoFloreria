@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Dashboard')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navAdmin('dashboard')}"></nav>
+
+<main class="container my-4">
+    <h2 class="fw-bold mb-4">Dashboard de métricas</h2>
+    <div class="row g-3">
+        <div class="col-md-4" th:each="m : ${metricas}">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <p class="text-muted mb-1" th:text="${m.key}">Métrica</p>
+                    <h4 class="fw-bold mb-0" style="color:#872355;" th:text="${m.value}">0</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<script th:replace="~{fragments/layout :: scripts}"></script>
+</body>
+</html>

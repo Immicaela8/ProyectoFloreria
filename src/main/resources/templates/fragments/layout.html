@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(titulo)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="'Rosa del Cielo | ' + ${titulo}">Rosa del Cielo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+
+<nav th:fragment="navComprador(activo)" class="navbar navbar-expand-lg navbar-dark" style="background-color:#872355;">
+    <div class="container">
+        <a class="navbar-brand fw-bold" th:href="@{/inicio}"><i class="bi bi-flower3"></i> Rosa del Cielo</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menu">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item me-lg-4"><a class="nav-link" th:classappend="${activo == 'inicio'} ? 'active'" th:href="@{/inicio}"><i class="bi bi-house"></i> Inicio</a></li>
+                <li class="nav-item me-lg-4"><a class="nav-link" th:classappend="${activo == 'productos'} ? 'active'" th:href="@{/productos}"><i class="bi bi-basket"></i> Productos</a></li>
+                <li class="nav-item me-lg-4"><a class="nav-link" th:classappend="${activo == 'promociones'} ? 'active'" th:href="@{/promociones}"><i class="bi bi-megaphone"></i> Promociones</a></li>
+                <li class="nav-item me-lg-4"><a class="nav-link" th:classappend="${activo == 'comprar'} ? 'active'" th:href="@{/comprar}"><i class="bi bi-cart"></i> Comprar</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/}"><i class="bi bi-box-arrow-right"></i> Salir</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<nav th:fragment="navAdmin(activo)" class="navbar navbar-expand-lg navbar-dark" style="background-color:#872355;">
+    <div class="container">
+        <a class="navbar-brand fw-bold" th:href="@{/admin}"><i class="bi bi-flower3"></i> Rosa del Cielo Admin</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menu">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" th:classappend="${activo == 'dashboard'} ? 'active'" th:href="@{/admin}">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" th:classappend="${activo == 'productos'} ? 'active'" th:href="@{/admin/productos}">Productos</a></li>
+                <li class="nav-item"><a class="nav-link" th:classappend="${activo == 'categorias'} ? 'active'" th:href="@{/admin/categorias}">Categorías</a></li>
+                <li class="nav-item"><a class="nav-link" th:classappend="${activo == 'promociones'} ? 'active'" th:href="@{/admin/promociones}">Promociones</a></li>
+                <li class="nav-item"><a class="nav-link" th:classappend="${activo == 'pedidos'} ? 'active'" th:href="@{/admin/pedidos}">Pedidos</a></li>
+                <li class="nav-item"><a class="nav-link" th:classappend="${activo == 'clientes'} ? 'active'" th:href="@{/admin/clientes}">Clientes</a></li>
+                <li class="nav-item"><a class="nav-link" th:classappend="${activo == 'repartidores'} ? 'active'" th:href="@{/admin/repartidores}">Repartidores</a></li>
+                <li class="nav-item"><a class="nav-link" th:classappend="${activo == 'zonas'} ? 'active'" th:href="@{/admin/zonas}">Zonas</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/}"><i class="bi bi-box-arrow-right"></i> Salir</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div th:fragment="mensajes">
+    <div class="alert alert-success" th:if="${ok != null}" th:text="${ok}"></div>
+    <div class="alert alert-danger" th:if="${error != null}" th:text="${error}"></div>
+</div>
+
+<footer th:fragment="footer" class="bg-dark text-white text-center py-4 mt-5">
+    <p class="mb-0">© 2026 Rosa del Cielo. Todos los derechos reservados.</p>
+</footer>
+
+<script th:fragment="scripts" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

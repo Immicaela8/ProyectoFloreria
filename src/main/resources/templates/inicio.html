@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Florería y Delivery')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navComprador('inicio')}"></nav>
+
+<img th:src="@{/img/portada.jpg}" class="img-fluid w-100 d-block" alt="Banner principal" style="height: 400px; object-fit: cover;">
+
+<main class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="display-5 fw-bold mb-4">Bienvenidos a Rosa del Cielo</h1>
+        <p class="lead mx-auto">Florería elegante y moderna, con una amplia variedad de flores frescas y arreglos personalizados para cada ocasión.</p>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card text-center shadow-sm h-100"><div class="card-body">
+                <i class="bi bi-flower1 fs-1 text-danger"></i>
+                <h3 class="mt-3">Flores Frescas</h3>
+                <p>Seleccionamos flores frescas y de excelente calidad.</p>
+            </div></div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center shadow-sm h-100"><div class="card-body">
+                <i class="bi bi-heart-fill fs-1 text-danger"></i>
+                <h3 class="mt-3">Arreglos Personalizados</h3>
+                <p>Cumpleaños, aniversarios, bodas y ocasiones especiales.</p>
+            </div></div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center shadow-sm h-100"><div class="card-body">
+                <i class="bi bi-truck fs-1 text-success"></i>
+                <h3 class="mt-3">Delivery de Flores</h3>
+                <p>Delivery gratis en tu primera compra.</p>
+            </div></div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<script th:replace="~{fragments/layout :: scripts}"></script>
+</body>
+</html>
